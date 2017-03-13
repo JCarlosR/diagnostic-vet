@@ -39,7 +39,7 @@
 		@foreach($diseases_system as $disease_system)
 		<tr>
 			<td>{{$disease_system->disease->name}}</td>
-			<td>{{$disease_system->disease->review}}</td>
+			<td>{{$disease_system->disease->review_short}}</td>
 			<td>                
 				<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
 			</td>
@@ -98,7 +98,7 @@
 		<div class="modal-footer">
 			<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cerrar</a>
 			<button class="btn waves-effect waves-light" type="submit" name="action">Guardar cambios
-				<i class="material-icons right">play_for_work</i>
+				<i class="material-icons right">done</i>
 			</button>
 		</div>       	
 	</form>

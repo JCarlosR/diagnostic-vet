@@ -13,7 +13,7 @@
                 <div class="input-field col s12">
                   <i class="material-icons prefix">email</i>
                   <input id="email" type="email" class="validate" name="email" value="{{ old('email') }}" required>
-                  <label for="email" data-error="E-Mail no valido" data-success="good">E-Mail Address</label>
+                  <label for="email" data-error="E-Mail no valido" data-success="good">E-Mail</label>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <button type="submit" class="waves-effect waves-light btn">
-                        Login
+                        Ingresar
                     </button>
 
                     <a class="right" href="{{ url('/password/reset') }}">
