@@ -12,8 +12,8 @@
 	<div class="col s2">
 		<div class="row">
 		    <div class="col s12 ">
-		      <div class="card">
-		      	<div class="card-title"><h5 class="center-align">{{$system->name}}</h5></div>
+		      <div class="card center">
+		      	<div class="card-title">{{$system->name}}</div>
 		        <div class="card-image">
 		          <img src="{{$system->photo_route}}">
 		          <a href="/enfermedades/{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
@@ -55,7 +55,7 @@
 			<div class="input-field col s9">
 				<div class="file-field input-field">
 					<div class="btn">
-						<span>File</span>
+						<span>Imagen</span>
 						<input id="imgInp" name="photo" type="file" required>
 					</div>
 					<div class="file-path-wrapper">
@@ -66,8 +66,8 @@
 		</div> 
 			 <div class="modal-footer">
 		      	<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cerrar</a>
-		    	<button class="modal-action waves-effect waves-green btn-flat" type="submit" >Guardar
-					<i class="material-icons right">play_for_work</i>
+		    	<button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+				    <i class="material-icons right">done</i>
 				</button>
 		    </div>       	
 		  </form>

@@ -36,7 +36,7 @@ class SystemController extends Controller
 
         //ajustamos y guardamos la imagen en la ruta especificada
         Image::make($request->file('photo'))
-               ->resize(144,144)
+               ->resize(250,250)
                ->save('images/systems/'. $file_name);
 
         return back()->with('notification','Usuario registrado exitosamente');
@@ -73,7 +73,7 @@ class SystemController extends Controller
 
             //ajustamos y guardamos la imagen en la ruta especificada
             Image::make($request->file('photo'))
-                   // ->resize(144,144)
+                   ->resize(250,250)
                    ->save('images/systems/'. $file_name);
         }
         
