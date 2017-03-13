@@ -13,26 +13,22 @@ use App\DiseaseSymptom;
 
 class DiseaseController extends Controller
 {
-    public function index($id)//id del sistema
+    public function index($id) // system_id
     {
-        $sistema = System::where('id',$id)->first();//arreglo del sistema correspondiente al id
-
+        $system = System::findOrFail($id); //arreglo del sistema correspondiente al id
        
-        $species_system = Species::where('id',$sistema->species_id)->first();
+        $species_system = Species::where('id',$system->species_id)->first();
         
-        $systems_species = System::where('species_id',$sistema->species_id)->get();
+        $systems_species = System::where('species_id',$system->species_id)->get();
 
         $diseases_system = DiseaseSystem::where('system_id',$id)->get();
         // dd($diseases_system);
         
-        $system = System::find($id);
-
         $symptoms = Symptom::all();
         
         return view('disease.index')->with(compact(
             'system','species_system','systems_species','diseases_system', 'symptoms'
         ));
-    	
     	
     }
     
@@ -82,14 +78,11 @@ class DiseaseController extends Controller
 
     public function edit($id, $id_disease)
     {
-        
-        $sistema = System::where('id',$id)->first();//arreglo del sistema correspondiente al id
+        $system = System::findOrFail($id);
        
-        $species_system = Species::where('id',$sistema->species_id)->first();
-        
-        $diseases = Disease::where('species_id',$sistema->species_id)->get();
-        
-        $system = System::find($id);
+        $species_system = Species::where('id',$system->species_id)->first();
+
+        // $diseases = Disease::where('species_id',$system->species_id)->get();
 
         // obteniendo enfermedad
         $diseases = Disease::find($id_disease);
