@@ -42,7 +42,7 @@ class SpeciesController extends Controller
 
     public function edit($id)
     {
-        $species = Species::find($id);
+        $species = Species::find($id); // findOrFail
 
         if (! $species)
             return redirect('/especies');
