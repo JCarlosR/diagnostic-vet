@@ -83,7 +83,7 @@
 				</div>
 				<div class="col s10">
 					@foreach ($systems_species as $system_species)
-					<div class="col s2">						
+					<div class="col s12 m6 l2">
 						<input type="checkbox" name="systems[]" value="{{ $system_species->id }}" class="filled-in" id="system{{ $system_species->id }}"/>
 						<label for="system{{ $system_species->id }}">{{$system_species->name}}</label>
 					</div>
