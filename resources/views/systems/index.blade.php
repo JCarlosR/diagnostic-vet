@@ -27,7 +27,7 @@
 	@endforeach
 
 	<div class="fixed-action-btn ">
-	    <a data-speciesId="x" href="#modal1" class="btn-floating btn-large red">
+	    <a data-speciesId="x" href="#modal1" class="btn-floating btn-large teal">
 	      <i class="large material-icons">add</i>
 	    </a>
 	</div>
