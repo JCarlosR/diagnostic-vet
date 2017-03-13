@@ -11,14 +11,14 @@ class SpeciesTableSeeder extends Seeder
      */
     public function run()
     {
-        Species::create([
-        	'name' => 'Especie 1',
-            'photo' => 'jpg',
-        ]);
+        // Species::create([
+        // 	'name' => 'Canino',
+        //     'photo' => 'jpg',
+        // ]);
 
-        Species::create([
-        	'name' => 'Especie 2',
-            'photo' => 'jpg',
-        ]);
+        // Species::create([
+        // 	'name' => 'Bovino',
+        //     'photo' => 'jpg',
+        // ]);
     }
 }

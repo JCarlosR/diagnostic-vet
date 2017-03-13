@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSystemsTable extends Migration
+class CreateDiseaseSystemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSystemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('systems', function (Blueprint $table) {
+        Schema::create('disease_system', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('photo')->nullable();//extension jpg, png
 
-            $table->integer('species_id')->unsigned();
-            $table->foreign('species_id')->references('id')->on('species');
+            $table->integer('disease_id')->unsigned();
+            $table->foreign('disease_id')->references('id')->on('diseases');
+
+            $table->integer('system_id')->unsigned();
+            $table->foreign('system_id')->references('id')->on('systems');
 
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreateSystemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('systems');
+        Schema::dropIfExists('disease_system');
     }
 }

@@ -27,15 +27,14 @@ class SpeciesController extends Controller
         $especies->save();
 
         //obenemos el id del registro
-        $species = Species::all();
-        $id=$species->last()->id;
+        $id = $especies->id;
 
         //generamos el nombre del archivo (id+extension)
         $file_name = $id.'.'.$extension;    
 
         //ajustamos y guardamos la imagen en la ruta especificada
         Image::make($request->file('photo'))
-               ->resize(144,144)
+               // ->resize(144,144)
                ->save('images/species/'. $file_name);
 
         return back()->with('notification','Usuario registrado exitosamente');
@@ -45,19 +44,33 @@ class SpeciesController extends Controller
         $species = Species::find($id);
         return view('species.edit')->with(compact('species'));
     }
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        // dd($request);
-        // dd("rico :3");
-        // $this->validate($request, Project::$rules,Project::$messages);
-        // Symptom::create($request->all());
-        $species_id=$request->input('id');
-        $species = Species::find($species_id);
-        $species->name=$request->input('name');
-        $species->description=$request->input('description');
-        $species->save();
+        $especies = Species::find($id);
+
+        if(! $request->file('photo')){
+            // dd("no esta instanciado");
+            $especies->name = $request->input('name');
+        }else{
+            // dd("si esta instanciado");
+            //obenemos la extension del archivo
+            $extension = $request->file('photo')->getClientOriginalExtension(); 
+            $especies->name = $request->input('name');
+            $especies->photo = $extension; 
+
+            //generamos el nombre del archivo (id+extension)
+            $file_name = $id.'.'.$extension;    
+
+            //ajustamos y guardamos la imagen en la ruta especificada
+            Image::make($request->file('photo'))
+                   // ->resize(144,144)
+                   ->save('images/species/'. $file_name);
+        }
         
-        return back();
+        $especies->save();
+         
+        // return view('species.index')->with(compact('species'));
+        return $this->index();
     }
    
 }

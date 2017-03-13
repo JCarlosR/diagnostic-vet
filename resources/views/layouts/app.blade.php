@@ -10,18 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- css- TAG-IT-->
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/reset-fonts/reset-fonts.css">
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/base/base-min.css">
-    <link href="http://fonts.googleapis.com/css?family=Brawler" rel="stylesheet" type="text/css">
-    <!-- <link href="/tag-it/_static/master.css" rel="stylesheet" type="text/css">
-    <link href="/tag-it/_static/subpage.css" rel="stylesheet" type="text/css">
- -->
-    <link href="/tag-it/css/jquery.tagit.css" rel="stylesheet" type="text/css">
-    <link href="/tag-it/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
-
-
-
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -57,12 +45,12 @@
       <nav>
         <div class="nav-wrapper">
         <div class="row">          
-          <div class="col s4">
+          <div class="col s8">
             @if(auth()->user())
               @yield('contentMenu')
             @endif             
           </div>
-          <div class="col s8">
+          <div class="col s4">
               <!-- <a href="{{ url('/') }}" class="brand-logo">
                   {{ config('app.name', 'Laravel') }}
               </a>  -->             
@@ -99,11 +87,6 @@
         
     <!-- </div> -->
     <!-- Scripts -->
-
-    <!-- TAG-IT -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/tag-it/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"

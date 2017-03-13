@@ -8,6 +8,18 @@
     height: 35%;
     width: 40%
 }
+#modal_disease {
+    padding: 0%;
+    height: 100%;
+    width: 70%;
+    max-height: 94%;
+}
+#modal_edit_disease {
+    padding: 0%;
+    height: 100%;
+    width: 70%;
+    max-height: 94%;
+}
 /*.btn-ver btn-floating halfway-fab waves-effect waves-light{
 	right: 60px;
 }

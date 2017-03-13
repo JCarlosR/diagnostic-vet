@@ -16,7 +16,13 @@ class CreateDiseasesTable extends Migration
         Schema::create('diseases', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('review');
+            $table->string('exams');
+            $table->string('treatment');
+
+            $table->integer('species_id')->unsigned();
+            $table->foreign('species_id')->references('id')->on('species');
+
             $table->timestamps();
         });
     }

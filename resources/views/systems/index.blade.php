@@ -6,10 +6,25 @@
 @endsection
 
 @section('content')
-	<br><br>
-	
+	<br>
+	<div class="col s12"><h3 class="center-align">Sistemas de la Especie {{$species->name}}</h3></div><br>
+	@foreach($systems as $system)
+	<div class="col s2">
+		<div class="row">
+		    <div class="col s12 ">
+		      <div class="card">
+		      	<div class="card-title"><h5 class="center-align">{{$system->name}}</h5></div>
+		        <div class="card-image">
+		          <img src="{{$system->photo_route}}">
+		          <a href="/enfermedades/{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
+		          <a href="/sistema/{{$system->id}}" style="right:60px;"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+		        </div>
+		      </div>
+		    </div>
+	  </div>
+	</div>
 
-
+	@endforeach
 
 	<div class="fixed-action-btn ">
 	    <a data-speciesId="x" href="#modal1" class="btn-floating btn-large red">
@@ -21,24 +36,34 @@
 	<div id="modal1" class="modal modal-fixed-footer">			
 		<form method="POST" enctype="multipart/form-data">
 		{{ csrf_field() }}
-			<div class="modal-content">
-				<h4>Registrar Sistema</h4>
-				<div class="input-field col s12">
-		          <input  name="name" placeholder="Ingrese aqui el nombre " type="text" class="validate" required>
-		          <label for="first_name">Nombre</label>
-		        </div>
-		        <div class="input-field col s12">
-		           <div class="file-field input-field">
-				      <div class="btn">
-				        <span>File</span>
-				        <input name="photo" type="file" required>
-				      </div>
-				      <div class="file-path-wrapper">
-				        <input class="file-path validate" type="text">
-				      </div>
-				    </div>
-		        </div>
-			</div> 
+		<div class="modal-content">
+			<h4>Registrar Sistema</h4>
+			<input type="hidden" name="species_id" value="{{$species->id}}">
+			<div class="input-field col s12">
+				<input  name="name" placeholder="Ingrese aqui el nombre " type="text" class="validate" required>
+				<label for="first_name">Nombre</label>
+			</div>
+			<div class="col s3 ">
+				<div class="card samll">
+					<div class="card-image">
+
+						<img id="blah" src="/images/no_image.png" alt="your image" />
+						
+					</div>
+				</div>
+			</div>
+			<div class="input-field col s9">
+				<div class="file-field input-field">
+					<div class="btn">
+						<span>File</span>
+						<input id="imgInp" name="photo" type="file" required>
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
+				</div>
+			</div>
+		</div> 
 			 <div class="modal-footer">
 		      	<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cerrar</a>
 		    	<button class="modal-action waves-effect waves-green btn-flat" type="submit" >Guardar
@@ -51,20 +76,29 @@
 
 @section('scripts')
     <script>
-        // $(document).ready(function(){   
-
-        //     $('#modal1').modal();           
-        // });
         $(function(){
         	$('[data-speciesId]').on('click',addSpeciesModal);	
         });
         function addSpeciesModal(){
-        	//id
-			var species_id = $(this).attr('data-speciesId');
-			$('#id_modal').val(species_id);
-        	
+        	       	
         	$('#modal1').modal(); 
         }
+        function readURL(input) {
+
+		    if (input.files && input.files[0]) {
+		        var reader = new FileReader();
+
+		        reader.onload = function (e) {
+		            $('#blah').attr('src', e.target.result);
+		        }
+
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+
+		$("#imgInp").change(function(){
+		    readURL(this);
+		});
 
     </script>
 @endsection

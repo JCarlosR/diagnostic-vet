@@ -32,13 +32,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/sistemas/{id}', 'SystemController@index');
 	Route::post('/sistemas/{id}', 'SystemController@store');
 
-
+	Route::get('/sistema/{id}', 'SystemController@edit');
+	Route::post('/sistema/{id}', 'SystemController@update');
 
 	//Disease
-	Route::get('/enfermedades', 'DiseaseController@index');
+	Route::get('/enfermedades/{id}', 'DiseaseController@index');//aqui
 	Route::post('/enfermedades', 'DiseaseController@store');
 
-	Route::get('/enfermedad/{id}', 'DiseaseController@edit');
+	Route::get('/enfermedad/{id}/{id_disease}', 'DiseaseController@edit');
 	Route::post('/enfermedad/{id}', 'DiseaseController@update');
 
 	Route::get('/enfermedad/{id}/restaurar', 'DiseaseController@restore');

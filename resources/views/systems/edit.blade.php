@@ -2,9 +2,9 @@
 
 @section('contentMenu')
 <a href="/especies" class="breadcrumb">Especies</a>
-<a href="#" class="breadcrumb">Editar Especie :  {{$species->name}}</a>
+<a href="/sistemas/{{$species_system->id}}" class="breadcrumb">Especie {{$species_system->name}}</a>
+<a href="#"                                 class="breadcrumb">Sistema {{$system->name}}</a>
 @endsection
-
 @section('content')
 <br><br>
 
@@ -12,17 +12,17 @@
 			
 		      <form method="POST" enctype="multipart/form-data">
         	  {{ csrf_field() }}		   
-		        		<h4>Editar Especie</h4>
+		        		<h4>Editar Sistema</h4>
 		        		<div class="input-field col s12">
-				          <input  name="name" placeholder="" type="text" class="validate" value="{{$species->name}}" required>
+				          <input  name="name" placeholder="" type="text" class="validate" value="{{$system->name}}" required>
 				          <label for="first_name">Nombre</label>
 				        </div>
 				        <div class="col s3 ">
 					      <div class="card samll">
 					        <div class="card-image">
 
-					        <img id="blah" src="{{$species->photo_route}}" alt="your image" />
-					        
+					          <img id="blah" src="{{$system->photo_route}}">	  
+					  
 					        </div>
 					      </div>
 					    </div>
@@ -30,9 +30,7 @@
 				           <div class="file-field input-field">
 						      <div class="btn">
 						        <span>Modificar Imagen</span>
-
-						        <input type='file' name="photo" id="imgInp" />
-	    						
+						        <input name="photo" type="file" id="imgInp" >
 						      </div>
 						      <div class="file-path-wrapper">
 						        <input class="file-path validate" type="text">
@@ -71,4 +69,3 @@
 
     </script>
 @endsection
-
