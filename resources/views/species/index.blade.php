@@ -7,10 +7,8 @@
 @section('content')
 <br><br>
 	@foreach($species as $specie)
-	<div class="col s2">
-		<div class="row">
-		    <div class="col s12 ">
-		      <div class="card center">
+	<div class="col s12 m6 l2">
+		  <div class="card center">
 		      	<div class="card-title">{{$specie->name}}</div>
 		        <div class="card-image">
 		          <img src="{{$specie->photo_route}}">
@@ -18,8 +16,6 @@
 		          <a href="/especie/{{$specie->id}}" style="right:60px;" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
 		        </div>
 		      </div>
-		    </div>
-	  </div>
 	</div>
 
 	@endforeach
