@@ -77,7 +77,7 @@
               @yield('content')
          </div> 
          @else
-         <div class="col s4 offset-s4 ">
+         <div class="col s12 m6 l4 offset-l4 ">
               <br><br><br>
               @yield('content')
          </div>
