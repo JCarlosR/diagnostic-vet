@@ -9,19 +9,15 @@
 	<br>
 	<div class="col s12"><h3 class="center-align">Sistemas de la Especie {{$species->name}}</h3></div><br>
 	@foreach($systems as $system)
-	<div class="col s2">
-		<div class="row">
-		    <div class="col s12 ">
-		      <div class="card center">
-		      	<div class="card-title">{{$system->name}}</div>
-		        <div class="card-image">
-		          <img src="{{$system->photo_route}}">
-		          <a href="/enfermedades/{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
-		          <a href="/sistema/{{$system->id}}" style="right:60px;"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
-		        </div>
-		      </div>
-		    </div>
-	  </div>
+	<div class="col s12 m6 l2">
+          <div class="card center">
+            <div class="card-title">{{$system->name}}</div>
+            <div class="card-image">
+              <img src="{{$system->photo_route}}">
+              <a href="/enfermedades/{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
+              <a href="/sistema/{{$system->id}}" style="right:60px;"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+            </div>
+          </div>
 	</div>
 
 	@endforeach
