@@ -60,8 +60,12 @@ class DiseaseController extends Controller
                 }    
             }
             // Y los síntomas asociados
-            $symptopms = explode(",", $request->input('symptoms'));
-            foreach ($symptopms as $symptom_name) {
+            $symptoms = explode(",", $request->input('symptoms'));
+            foreach ($symptoms as $symptom_name) {
+                $symptom_name = trim($symptom_name);
+                if ($symptom_name == '')
+                    continue;
+
                 $diseaseSymptom = new DiseaseSymptom();
                 $diseaseSymptom->disease_id = $disease->id;
                 $symptom = Symptom::firstOrCreate([
