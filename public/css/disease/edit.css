@@ -1,28 +1,6 @@
-#modal1 {
-    padding: 0%;
-    height: 60%;
-    width: 40%
-}
-#modal2 {
-    padding: 0%;
-    height: 60%;
-    width: 40%
-}
 #modal_disease {
-    padding: 0%;
+    padding: 0;
     height: 100%;
     width: 70%;
     max-height: 94%;
 }
-#modal_edit_disease {
-    padding: 0%;
-    height: 100%;
-    width: 70%;
-    max-height: 94%;
-}
-/*.btn-ver btn-floating halfway-fab waves-effect waves-light{
-	right: 60px;
-}
-.btn-ver{
-	right: 10px;
-}*/
