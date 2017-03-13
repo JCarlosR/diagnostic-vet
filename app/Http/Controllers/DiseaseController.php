@@ -50,13 +50,15 @@ class DiseaseController extends Controller
         if ($saved) {
             // Registramos los sistemas asociados
             $system_ids = $request->input('systems');
-            foreach ($system_ids as $system_id) {   
-                $diseaseSystem = new DiseaseSystem();
-                $diseaseSystem->disease_id = $disease->id;
-                $diseaseSystem->system_id = $system_id;
-                $diseaseSystem->save();
-            }    
 
+            if ($system_ids > 0) {
+                foreach ($system_ids as $system_id) {   
+                    $diseaseSystem = new DiseaseSystem();
+                    $diseaseSystem->disease_id = $disease->id;
+                    $diseaseSystem->system_id = $system_id;
+                    $diseaseSystem->save();
+                }    
+            }
             // Y los síntomas asociados
             $symptopms = explode(",", $request->input('symptoms'));
             foreach ($symptopms as $symptom_name) {
