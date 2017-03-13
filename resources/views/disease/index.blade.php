@@ -15,14 +15,14 @@
 </div>
 <div class="col s12">
 	<h4 class="center-align">
-		Especie:{{$species_system->name}} - Sistema:{{$system->name}}
+		Especie: {{$species_system->name}} - Sistema: {{$system->name}}
 	</h4>
 </div>
 
 <br>
 
 <div class="fixed-action-btn ">
-	<a data-add="x" href="#modal_disease" title="AGREGAR ENFERMEDAD" class="btn-floating btn-large red">
+	<a data-add="x" href="#modal_disease" title="AGREGAR ENFERMEDAD" class="btn-floating btn-large teal">
 		<i class="large material-icons">add</i>
 	</a>
 </div>

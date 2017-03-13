@@ -156,8 +156,7 @@ class DiseaseController extends Controller
                 $diseaseSystem->save();
                 }   
             }
-            
-            //AQUI HAY PROBLEMA :V 
+
 
             // Y los síntomas asociados
             $symptoms = explode(",", $request->input('symptoms'));

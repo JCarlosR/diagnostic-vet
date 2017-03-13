@@ -43,7 +43,7 @@
         </li>                 
       </ul>
       <nav>
-        <div class="nav-wrapper">
+        <div class="nav-wrapper teal">
         <div class="row">          
           <div class="col s8">
             @if(auth()->user())
@@ -58,7 +58,6 @@
                 @if (Auth::guest())
                 <li><a href="{{ url('/login') }}">Ingresar</a></li>
                 <li><a href="{{ url('/register') }}">Registro</a></li>
-                
                 @else
                 <!-- Dropdown Trigger -->
                 <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i>{{ Auth::user()->name }}</i></a></li>

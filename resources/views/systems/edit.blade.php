@@ -3,13 +3,12 @@
 @section('contentMenu')
 <a href="/especies" class="breadcrumb">Especies</a>
 <a href="/sistemas/{{$species_system->id}}" class="breadcrumb">Especie {{$species_system->name}}</a>
-<a href="#"                                 class="breadcrumb">Sistema {{$system->name}}</a>
+<a href="#" class="breadcrumb">Sistema {{$system->name}}</a>
 @endsection
+
 @section('content')
 <br><br>
-
 		<div class="col s8 offset-s2">
-			
 		      <form method="POST" enctype="multipart/form-data">
         	  {{ csrf_field() }}		   
 		        		<h4>Editar Sistema</h4>

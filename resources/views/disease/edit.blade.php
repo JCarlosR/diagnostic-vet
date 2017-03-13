@@ -14,8 +14,6 @@
 		<div>
 			<h5 class="center-align">EDITAR ENFERMEDAD</h5><br>
 
-			
-
 			<div class="input-field col s6">
 	          <input  name="name" placeholder="Ingrese aqui el nombre " type="text" class="validate" value="{{$diseases->name}}" required>
 	          <label for="first_name">Nombre</label>
