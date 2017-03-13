@@ -68,11 +68,13 @@
     <script>
     	$(function () {
         	$('.chips-autocomplete').material_chip({
-			    data: [
+			    @if (sizeof($chips) > 0)
+        	    data: [
 			    	@foreach ($chips as $chip)
 			    		{ tag: '{{ $chip->name }}'},
 			    	@endforeach
 		    	],
+				@endif
         		secondaryPlaceholder: 'Ingrese síntomas',
         		placeholder: '+Síntoma',
         		autocompleteData: {
