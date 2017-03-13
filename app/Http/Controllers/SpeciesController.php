@@ -11,12 +11,12 @@ class SpeciesController extends Controller
 {
     public function index()
     {
-    	$species = Species::get();
+    	$species = Species::all();
     	return view('species.index')->with(compact('species'));
     }
+
     public function store(Request $request)
     {
-
         //obenemos la extension del archivo
         $extension = $request->file('photo')->getClientOriginalExtension();  
 
@@ -39,11 +39,17 @@ class SpeciesController extends Controller
 
         return back()->with('notification','Usuario registrado exitosamente');
     }
+
     public function edit($id)
     {
         $species = Species::find($id);
+
+        if (! $species)
+            return redirect('/especies');
+
         return view('species.edit')->with(compact('species'));
     }
+
     public function update($id, Request $request)
     {
         $especies = Species::find($id);
