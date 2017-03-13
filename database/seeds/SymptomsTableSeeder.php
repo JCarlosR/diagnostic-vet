@@ -12,27 +12,11 @@ class SymptomsTableSeeder extends Seeder
     public function run()
     {
         Symptom::create([
-        	'name' => 'Sintoma 1',
+        	'name' => 'DEBILIDAD',
         ]);
 
         Symptom::create([
-        	'name' => 'Sintoma 2',
-        ]);
-
-        Symptom::create([
-        	'name' => 'Sintoma 3',
-        ]);
-
-        Symptom::create([
-        	'name' => 'Sintoma 4',
-        ]);
-
-        Symptom::create([
-        	'name' => 'Sintoma 5',
-        ]);
-
-        Symptom::create([
-        	'name' => 'Sintoma 6',
+        	'name' => 'DIARREA',
         ]);
     }
 }
