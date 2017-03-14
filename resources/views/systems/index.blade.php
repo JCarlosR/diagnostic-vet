@@ -7,6 +7,11 @@
 
 @section('content')
 	<br>
+
+	<a title="Enfermedades" href="/enfermedadesAll/{{$species->id}}" class="btn waves-effect waves-light teal">
+        <i class="material-icons left">list</i> Ver enfermedades de esta especie
+	</a>
+
 	<div class="col s12"><h3 class="center-align">Sistemas de la Especie {{$species->name}}</h3></div><br>
 	@foreach($systems as $system)
 	<div class="col s12 m6 l2">

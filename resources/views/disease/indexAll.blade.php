@@ -3,10 +3,15 @@
 @section('contentMenu')
 <a href="/especies" class="breadcrumb">Especies</a>
 <a href="/sistemas/{{$species_system->id}}" class="breadcrumb">Especie {{$species_system->name}}</a>
-<a href="#" class="breadcrumb"> Sistema  {{$system->name}} </a>
+<a href="#" class="breadcrumb">Enfermedades</a>
 @endsection
 
 @section('content')
+<br><br>
+<a title="Enfermedades" href="#modal_unnasigned_system" class="btn waves-effect waves-light teal">
+	<i class="material-icons left">warning</i>
+	Enfermedades Sin Sistemas asociados
+</a>
 
 <div class="col s12">
 	<h4 class="center-align">
@@ -15,7 +20,7 @@
 </div>
 <div class="col s12">
 	<h4 class="center-align">
-		Especie: {{$species_system->name}} - Sistema: {{$system->name}}
+		Especie: {{$species_system->name}}
 	</h4>
 </div>
 
@@ -41,7 +46,7 @@
 			<td>{{$disease_system->disease->name}}</td>
 			<td>{{$disease_system->disease->review_short}}</td>
 			<td>                
-				<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
+				<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
 			</td>
 		</tr>
 		@endforeach
@@ -103,6 +108,37 @@
 		</div>       	
 	</form>
 </div>
+
+<!-- Modal Unnasignet System -->
+  <div id="modal_unnasigned_system" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Enfermedades sin sistemas asociados</h4>
+      <table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Reseña</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($diseases_system as $disease_system)
+			<tr>
+				<td>{{$disease_system->disease->name}}</td>
+				<td>{{$disease_system->disease->review_short}}</td>
+				<td>                
+					<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
+				</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Volver</a>
+    </div>
+  </div>
+
 @endsection
 
 @section('scripts')
@@ -150,6 +186,10 @@
 
 		$('#symptoms').val(chips.join(','));
 	}
+	$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
 
 
 </script>

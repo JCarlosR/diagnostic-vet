@@ -13,6 +13,24 @@ use App\DiseaseSymptom;
 
 class DiseaseController extends Controller
 {
+    public function indexAll($id_species)
+    {          
+
+        $species_system = Species::find($id_species);//Especie
+
+        $systems_species = System::where('species_id',$id_species)->get();//Sistemas de la especie
+            
+        $systems_species_array = System::where('species_id',$id_species)->pluck('id');;//Id de los sistemas de la especie
+        $systems_species_array = $systems_species_array->toArray();
+
+        $diseases_system = DiseaseSystem::whereIn('system_id',$systems_species_array)->get();//Enfermdades de la especie       
+        
+        $symptoms = Symptom::all();//todos los sintomas
+        
+        return view('disease.indexAll')->with(compact(
+            'species_system','systems_species','diseases_system', 'symptoms'
+        ));
+    }
     public function index($id) // system_id
     {
         $system = System::findOrFail($id); //arreglo del sistema correspondiente al id
@@ -96,6 +114,7 @@ class DiseaseController extends Controller
         $diseaseSystems = $diseaseSystems->toArray();
         // Sistemas asociados con la especie
         $systems = System::where('species_id', $system->species_id)->get();
+        // dd($system);
         // Marcamos los sistemas que ya están seleccionados
         foreach ($systems as $system) {
             if (in_array($system->id, $diseaseSystems))
@@ -117,6 +136,49 @@ class DiseaseController extends Controller
         // dd($chips);
 
         return view('disease.edit')->with(compact(
+            'system','species_system','diseases', 'systems', 
+
+            // Sintomas: todos y los escogidos
+            'symptoms', 'chips'
+        ));
+    }
+    public function editAll($species_id, $id_disease)
+    {
+        // $system = System::findOrFail($id);
+       
+        $species_system = Species::where('id',$species_id)->first();
+
+        // $diseases = Disease::where('species_id',$system->species_id)->get();
+
+        // obteniendo enfermedad
+        $diseases = Disease::find($id_disease);
+
+        // Sistemas afectados
+        $diseaseSystems = DiseaseSystem::where('disease_id', $id_disease)->pluck('system_id');
+        $diseaseSystems = $diseaseSystems->toArray();
+        // Sistemas asociados con la especie
+        $systems = System::where('species_id', $species_id)->get();
+        // Marcamos los sistemas que ya están seleccionados
+        foreach ($systems as $system) {
+            if (in_array($system->id, $diseaseSystems))
+                $system->checked = true;
+            else
+                $system->checked = false;
+        }
+        
+
+        // Todos los sintomas
+        $symptoms = Symptom::all();
+
+        // Síntomas escogidos
+        $diseaseSymptoms = DiseaseSymptom::where('disease_id', $id_disease)->pluck('symptom_id');
+        // dd($diseaseSymptoms);
+        if (sizeof($diseaseSymptoms) > 0)
+            $chips = Symptom::whereIn('id', $diseaseSymptoms)->get();
+        else $chips = [];
+        // dd($chips);
+
+        return view('disease.editAll')->with(compact(
             'system','species_system','diseases', 'systems', 
 
             // Sintomas: todos y los escogidos

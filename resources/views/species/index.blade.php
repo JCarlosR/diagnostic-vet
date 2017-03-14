@@ -2,6 +2,7 @@
 
 @section('contentMenu')
 <a href="#" class="breadcrumb">Especies</a>
+
 @endsection
 
 @section('content')
@@ -26,7 +27,10 @@
 	    </a>
 	</div>
 
-	<!-- img prueba -->
+
+
+
+<!-- img prueba -->
 	    <!-- <input type='file' id="imgInp" />
 	    <img id="blah" src="#" alt="your image" /> -->
 	
