@@ -24,11 +24,17 @@ class DiseaseController extends Controller
         $systems_species_array = $systems_species_array->toArray();
 
         $diseases_system = DiseaseSystem::whereIn('system_id',$systems_species_array)->get();//Enfermdades de la especie       
+
+        $diseases_assigned = DiseaseSystem::pluck('disease_id');//id de enfermedades com sistemas asignados
+        $diseases_assigned = $diseases_assigned->toArray();
+
+        $diseases_unassigned = Disease::whereNotIn('id',$diseases_assigned)->get();// Enfermedades sin asociar
         
+
         $symptoms = Symptom::all();//todos los sintomas
         
         return view('disease.indexAll')->with(compact(
-            'species_system','systems_species','diseases_system', 'symptoms'
+            'species_system','systems_species','diseases_system', 'symptoms','diseases_unassigned'
         ));
     }
     public function index($id) // system_id
@@ -41,11 +47,16 @@ class DiseaseController extends Controller
 
         $diseases_system = DiseaseSystem::where('system_id',$id)->get();
         // dd($diseases_system);
+
+        $diseases_assigned = DiseaseSystem::pluck('disease_id');//id de enfermedades com sistemas asignados
+        $diseases_assigned = $diseases_assigned->toArray();
+
+        $diseases_unassigned = Disease::whereNotIn('id',$diseases_assigned)->get();// Enfermedades sin asociar
         
         $symptoms = Symptom::all();
         
         return view('disease.index')->with(compact(
-            'system','species_system','systems_species','diseases_system', 'symptoms'
+            'system','species_system','systems_species','diseases_system', 'symptoms','diseases_unassigned'
         ));
     	
     }
@@ -135,6 +146,9 @@ class DiseaseController extends Controller
         else $chips = [];
         // dd($chips);
 
+        // Variable de sesión
+        session()->put('redirect_update_disease', '/enfermedades/'.$id);
+
         return view('disease.edit')->with(compact(
             'system','species_system','diseases', 'systems', 
 
@@ -177,6 +191,9 @@ class DiseaseController extends Controller
             $chips = Symptom::whereIn('id', $diseaseSymptoms)->get();
         else $chips = [];
         // dd($chips);
+
+        //variable de sesion
+        session()->put('redirect_update_disease', '/enfermedadesAll/'.$species_id);
 
         return view('disease.editAll')->with(compact(
             'system','species_system','diseases', 'systems', 
@@ -235,7 +252,8 @@ class DiseaseController extends Controller
             // dd("guardo los SINTOMAS asociados");
         }
         
-        return back();
+        // return back();
+        return redirect(session('redirect_update_disease'));
         
     
     }

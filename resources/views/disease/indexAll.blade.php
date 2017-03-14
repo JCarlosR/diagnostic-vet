@@ -122,12 +122,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($diseases_system as $disease_system)
+			@foreach($diseases_unassigned as $disease_unassigned)
 			<tr>
-				<td>{{$disease_system->disease->name}}</td>
-				<td>{{$disease_system->disease->review_short}}</td>
+				<td>{{$disease_unassigned->name}}</td>
+				<td>{{$disease_unassigned->review_short}}</td>
 				<td>                
-					<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
+					<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_unassigned->id}}"><i class="material-icons">edit</i></a>     
 				</td>
 			</tr>
 			@endforeach
@@ -186,10 +186,11 @@
 
 		$('#symptoms').val(chips.join(','));
 	}
+
 	$(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
-  });
+  	});
 
 
 </script>
