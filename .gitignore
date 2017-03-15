@@ -1,6 +1,7 @@
 /node_modules
 /public/storage
 /public/images/systems
+/public/images/species
 /vendor
 /.idea
 Homestead.json
