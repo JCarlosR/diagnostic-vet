@@ -12,7 +12,7 @@ class SystemController extends Controller
     public function index($id)
     {	
     	$species = Species::find($id);
-    	$systems = System::where('species_id',$id)->get();
+    	$systems = System::where('species_id',$id)->orderBy('name', 'asc')->get();
         return view('systems.index')->with(compact('systems','species'));
     }
     public function store(Request $request)

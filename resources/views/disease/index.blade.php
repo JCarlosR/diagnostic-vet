@@ -7,11 +7,14 @@
 @endsection
 
 @section('content')
+
 <br><br>
-<a title="Enfermedades" href="#modal_unnasigned_system" class="btn waves-effect waves-light teal">
-	<i class="material-icons left">warning</i>
-	Enfermedades Sin Sistemas asociados
-</a>
+@if(count($diseases_unassigned)>0)
+	<a title="Enfermedades" href="#modal_unnasigned_system" class="btn waves-effect waves-light teal">
+		<i class="material-icons left">warning</i>
+		Enfermedades Sin Sistemas asociados
+	</a>
+@endif
 
 <div class="col s12">
 	<h4 class="center-align">
@@ -43,10 +46,10 @@
 	<tbody>
 		@foreach($diseases_system as $disease_system)
 		<tr>
-			<td>{{$disease_system->disease->name}}</td>
-			<td>{{$disease_system->disease->review_short}}</td>
+			<td>{{$disease_system->name}}</td>
+			<td>{{$disease_system->review_short}}</td>
 			<td>                
-				<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$system->id}}/{{$disease_system->disease_id}}"><i class="material-icons">edit</i></a>     
+				<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$system->id}}/{{$disease_system->id}}"><i class="material-icons">edit</i></a>     
 			</td>
 		</tr>
 		@endforeach
@@ -126,7 +129,7 @@
 				<td>{{$disease_unassigned->name}}</td>
 				<td>{{$disease_unassigned->review_short}}</td>
 				<td>                
-					<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_unassigned->id}}"><i class="material-icons">edit</i></a>     
+					<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$species_system->id}}/{{$disease_unassigned->id}}"><i class="material-icons">edit</i></a>     
 				</td>
 			</tr>
 			@endforeach

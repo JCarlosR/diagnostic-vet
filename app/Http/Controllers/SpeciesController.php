@@ -11,7 +11,7 @@ class SpeciesController extends Controller
 {
     public function index()
     {
-    	$species = Species::all();
+    	$species = Species::orderBy('name', 'asc')->get();
     	return view('species.index')->with(compact('species'));
     }
 
