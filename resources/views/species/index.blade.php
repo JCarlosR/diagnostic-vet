@@ -13,8 +13,10 @@
 		      	<div class="card-title">{{$specie->name}}</div>
 		        <div class="card-image">
 		          <img src="{{$specie->photo_route}}">
-		          <a href="/sistemas/{{$specie->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
-		          <a href="/especie/{{$specie->id}}" style="right:60px;" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+		          <a href="#modal_delete" data-delete="{{$specie->id}}"  style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a> 
+		          <!-- /especie/{{$specie->id}}/eliminar-->
+		          <a href="/sistemas/{{$specie->id}}" style="right:114px;" class="btn-floating halfway-fab waves-effect waves-light green"><i class="material-icons">visibility</i></a>
+		          <a href="/especie/{{$specie->id}}" style="right:61px;" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
 		        </div>
 		      </div>
 	</div>
@@ -74,6 +76,18 @@
 				    </div>       	
        		  </form>
 	</div>    
+
+	<!-- Modal Structure -->
+  <div id="modal_delete" class="modal">
+    <div class="modal-content">
+      <h4>Esta seguro que desea eliminar esta especie</h4>
+      <p>Si elimina esta especie se eliminaran tambien sus sistemas y enfermedades asociadas</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No eliminar</a>
+      <a id="delete" href="#!" class=" waves-effect waves-light btn red">Eliminar de todas formas</a>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
@@ -84,6 +98,7 @@
         // });
         $(function(){
         	$('[data-speciesId]').on('click',addSpeciesModal);	
+        	$('[data-delete]').on('click',confirmation);	
         });
         function addSpeciesModal(){
         	//id
@@ -91,6 +106,14 @@
 			$('#id_modal').val(species_id);
         	
         	$('#modal1').modal(); 
+        }
+        function confirmation(){
+        	//id
+			var species_id = $(this).attr('data-delete');
+			// alert(species_id);
+			$('#delete').attr("href", "/especie/"+species_id+"/eliminar");
+        	
+        	$('#modal_delete').modal(); 
         }
         function readURL(input) {
 

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/especie/{id}', 'SpeciesController@edit');
 	Route::post('/especie/{id}', 'SpeciesController@update');
 
+	Route::get('/especie/{id}/eliminar', 'SpeciesController@delete');
+
 	//Sistemas
 	Route::get('/sistemas/{id}', 'SystemController@index');
 	Route::post('/sistemas/{id}', 'SystemController@store');
@@ -35,19 +37,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/sistema/{id}', 'SystemController@edit');
 	Route::post('/sistema/{id}', 'SystemController@update');
 
+	Route::get('/sistema/{id}/eliminar', 'SystemController@delete');
+
 	//Disease
 	Route::get('/enfermedadesAll/{id_specie}', 'DiseaseController@indexAll');//aqui todas las enfermedades de la especie
-
 	Route::get('/enfermedades/{id}', 'DiseaseController@index');//aqui enfermdedades por sistema
 	Route::post('/enfermedades', 'DiseaseController@store');
 
-	Route::get('/enfermedadAll/{species_id}/{id_disease}', 'DiseaseController@editAll');// editar todas las  enfermedades de la especia
-	
-
-	Route::get('/enfermedad/{id}/{id_disease}', 'DiseaseController@edit');	// editar enfermedades del sistema
+	Route::get('/enfermedadAll/{species_id}/{id_disease}/editar', 'DiseaseController@editAll');// editar todas las  enfermedades 
+	Route::get('/enfermedad/{id}/{id_disease}/editar', 'DiseaseController@edit');	// editar enfermedades del sistema
+	// /sistema/{system_id}/enfermedad/{disease_id}/editar
 	Route::post('/enfermedad/{id}', 'DiseaseController@update');
 
-	Route::get('/enfermedad/{id}/restaurar', 'DiseaseController@restore');
 	Route::get('/enfermedad/{id}/eliminar', 'DiseaseController@delete');
 
 	//Symptom

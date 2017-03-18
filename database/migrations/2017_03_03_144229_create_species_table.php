@@ -17,6 +17,7 @@ class CreateSpeciesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('photo')->nullable();//extension jpg, png
+            $table->softDeletes();
             $table->timestamps();
         });
     }

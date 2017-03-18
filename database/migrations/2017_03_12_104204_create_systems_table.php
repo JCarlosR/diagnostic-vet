@@ -21,6 +21,7 @@ class CreateSystemsTable extends Migration
             $table->integer('species_id')->unsigned();
             $table->foreign('species_id')->references('id')->on('species');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

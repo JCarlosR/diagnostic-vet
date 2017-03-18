@@ -10,7 +10,7 @@
 
 <br><br>
 @if(count($diseases_unassigned)>0)
-	<a title="Enfermedades" href="#modal_unnasigned_system" class="btn waves-effect waves-light teal">
+	<a title="Enfermedades" href="#modal_unnasigned_system" class="btn waves-effect waves-light teal red">
 		<i class="material-icons left">warning</i>
 		Enfermedades Sin Sistemas asociados
 	</a>
@@ -48,8 +48,11 @@
 		<tr>
 			<td>{{$disease_system->name}}</td>
 			<td>{{$disease_system->review_short}}</td>
-			<td>                
-				<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$system->id}}/{{$disease_system->id}}"><i class="material-icons">edit</i></a>     
+			<td>  
+				<a class="btn-floating blue" data-edit="x" href="/enfermedad/{{$system->id}}/{{$disease_system->id}}/editar"><i class="material-icons">edit</i></a>  
+
+				<a class="btn-floating red"  data-delete="{{$disease_system->id}}" href="#modal_delete"><i class="material-icons">delete</i></a>  
+				<!--/enfermedad/{{$disease_system->id}}/eliminar-->             
 			</td>
 		</tr>
 		@endforeach
@@ -128,8 +131,11 @@
 			<tr>
 				<td>{{$disease_unassigned->name}}</td>
 				<td>{{$disease_unassigned->review_short}}</td>
-				<td>                
-					<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$species_system->id}}/{{$disease_unassigned->id}}"><i class="material-icons">edit</i></a>     
+				<td>         
+
+					<a class="btn-floating blue" data-edit="x"  href="/enfermedad/{{$species_system->id}}/{{$disease_unassigned->id}}/editar"><i class="material-icons">edit</i></a> 
+					<a class="btn-floating red"  data-delete="{{$disease_unassigned->id}}"  href="#modal_delete"><i class="material-icons">delete</i></a> 
+					<!--/enfermedad/{{$disease_unassigned->id}}/eliminar-->      
 				</td>
 			</tr>
 			@endforeach
@@ -140,6 +146,16 @@
       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Volver</a>
     </div>
   </div>
+  <div id="modal_delete" class="modal">
+    <div class="modal-content">
+      <h4>Esta seguro que desea eliminar esta enfermedad</h4>
+      <p>Si elimina este sistema se eliminaran tambien las relaciones con sus enfermedades</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No eliminar</a>
+      <a id="delete" href="#!" class=" waves-effect waves-light btn red">Eliminar de todas formas</a>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
@@ -148,6 +164,7 @@
 
 	$(function(){
 		$('[data-add]').on('click',addDiseaseModal);	
+		$('[data-delete]').on('click',confirmation);
         	// $('[data-edit]').on('click',editDiseaseModal);	
 
 
@@ -169,7 +186,14 @@
         		updateChipsInputHidden(); 
         	});
         });
-
+	function confirmation(){
+        	//id
+			var disease_id = $(this).attr('data-delete');
+					
+			$('#delete').attr("href", "/enfermedad/"+disease_id+"/eliminar");
+        	
+        	$('#modal_delete').modal(); 
+        }
 	function addDiseaseModal(){        	
 		$('#modal_disease').modal({
 				startingTop: '3%', // Starting top style attribute

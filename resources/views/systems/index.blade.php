@@ -19,8 +19,9 @@
             <div class="card-title">{{$system->name}}</div>
             <div class="card-image">
               <img src="{{$system->photo_route}}">
-              <a href="/enfermedades/{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">visibility</i></a>
-              <a href="/sistema/{{$system->id}}" style="right:60px;"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+              <a href="#modal_delete" data-delete="{{$system->id}}" style="right:10px;" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+              <a href="/enfermedades/{{$system->id}}" style="right:114px;" class="btn-floating halfway-fab waves-effect waves-light green"><i class="material-icons">visibility</i></a>
+              <a href="/sistema/{{$system->id}}" style="right:61px;"class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">edit</i></a>
             </div>
           </div>
 	</div>
@@ -73,16 +74,36 @@
 		    </div>       	
 		  </form>
 	</div>    
+		<!-- Modal Structure -->
+  <div id="modal_delete" class="modal">
+    <div class="modal-content">
+      <h4>Esta seguro que desea eliminar el sistema</h4>
+      <p>Si elimina este sistema se eliminaran tambien las relaciones con sus enfermedades</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No eliminar</a>
+      <a id="delete" href="#!" class=" waves-effect waves-light btn red">Eliminar de todas formas</a>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
     <script>
         $(function(){
-        	$('[data-speciesId]').on('click',addSpeciesModal);	
+        	$('[data-speciesId]').on('click',addSpeciesModal);
+        	$('[data-delete]').on('click',confirmation);		
         });
         function addSpeciesModal(){
         	       	
         	$('#modal1').modal(); 
+        }
+        function confirmation(){
+        	//id
+			var system_id = $(this).attr('data-delete');
+			
+			$('#delete').attr("href", "/sistema/"+system_id+"/eliminar");
+        	
+        	$('#modal_delete').modal(); 
         }
         function readURL(input) {
 

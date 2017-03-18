@@ -82,4 +82,9 @@ class SystemController extends Controller
 
         return $this->index($systems->species_id);
     }
+    public function delete($id)
+    {
+        System::find($id)->delete();
+        return back();
+    }
 }

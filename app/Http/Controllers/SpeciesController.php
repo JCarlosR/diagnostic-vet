@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Species;
+use App\System;
+use App\Disease;
+use App\DiseaseSystem;
+use App\DiseaseSymptom;
 use Intervention\Image\Facades\Image;
 
 class SpeciesController extends Controller
@@ -77,6 +81,24 @@ class SpeciesController extends Controller
          
         // return view('species.index')->with(compact('species'));
         return $this->index();
+    }
+
+    public function delete($id)
+    {
+        // $diseases_species_array = Disease::where('species_id',$id)->pluck('id');
+        // $diseases_species_array = $diseases_species_array->toArray(); //Array de Id de las enfermedades
+
+        // DiseaseSystem::whereIn('disease_id',$diseases_species_array)->delete(); //relacion con sistemas
+
+        // DiseaseSymptom::whereIn('disease_id',$diseases_species_array)->delete(); //relacion con sintomas
+
+        // Disease::where('species_id',$id)->delete(); // enfermedades de la especie
+
+        // System::where('species_id',$id)->delete();//sitemas asociados 
+        
+        Species::find($id)->delete();
+        
+        return back();
     }
    
 }

@@ -262,4 +262,10 @@ class DiseaseController extends Controller
         
     
     }
+
+    public function delete($id)
+    {
+        Disease::find($id)->delete();
+        return back();
+    }
 }
