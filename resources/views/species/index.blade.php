@@ -80,8 +80,8 @@
 	<!-- Modal Structure -->
   <div id="modal_delete" class="modal">
     <div class="modal-content">
-      <h4>Esta seguro que desea eliminar esta especie</h4>
-      <p>Si elimina esta especie se eliminaran tambien sus sistemas y enfermedades asociadas</p>
+      <h4>Está seguro que desea eliminar esta especie?</h4>
+      <p>Si elimina esta especie se eliminarán tambien sus sistemas y enfermedades asociadas.</p>
     </div>
     <div class="modal-footer">
       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No eliminar</a>
