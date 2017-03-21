@@ -68,9 +68,6 @@ class DiseaseController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
-        // dd($symptopms);
-
         // Guardamos en la bd una nueva enfermedad
         $disease = new Disease();
         $disease->name = $request->input('name');
