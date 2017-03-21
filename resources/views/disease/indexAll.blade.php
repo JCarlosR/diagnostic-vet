@@ -50,7 +50,6 @@
 			<td>                
 				<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_system->id}}/editar"><i class="material-icons">edit</i></a>  
 				<a class="btn-floating red"  data-delete="{{$disease_system->id}}" href="#modal_delete"  ><i class="material-icons">delete</i></a>   
-				<!--href="/enfermedad/{{$disease_system->id}}/eliminar"--> 
 			</td>
 		</tr>
 		@endforeach
@@ -133,7 +132,6 @@
 				<td>                
 					<a class="btn-floating blue" data-edit="x"  href="/enfermedadAll/{{$species_system->id}}/{{$disease_unassigned->id}}/editar"><i class="material-icons">edit</i></a>   
 					<a class="btn-floating red"  data-delete="{{$disease_unassigned->id}}" href="#modal_delete" ><i class="material-icons">delete</i></a>   
-					<!--href="/enfermedad/{{$disease_unassigned->id}}/eliminar"-->
 				</td>
 			</tr>
 			@endforeach

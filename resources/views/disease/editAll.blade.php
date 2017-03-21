@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="col s12">
-				<input type="hidden" name="symptoms" value="@foreach($chips as $chip) {{ $chip->name }}, @endforeac" id ="symptoms">
+				<input type="hidden" name="symptoms" value="@foreach($chips as $chip) {{ $chip->name }}, @endforeach" id ="symptoms">
 				<div class="chips chips-autocomplete">
 				</div>
 			</div>

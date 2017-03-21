@@ -44,8 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/enfermedades/{id}', 'DiseaseController@index');//aqui enfermdedades por sistema
 	Route::post('/enfermedades', 'DiseaseController@store');
 
-	Route::get('/enfermedadAll/{species_id}/{id_disease}/editar', 'DiseaseController@editAll');// editar todas las  enfermedades 
-	Route::get('/enfermedad/{id}/{id_disease}/editar', 'DiseaseController@edit');	// editar enfermedades del sistema
+	Route::get('/enfermedadAll/{species_id}/{id_disease}/editar', 'DiseaseController@editAll'); // editar todas las  enfermedades de una especie
+	Route::get('/enfermedad/{id}/{id_disease}/editar', 'DiseaseController@edit'); // editar enfermedades del sistema
 	// /sistema/{system_id}/enfermedad/{disease_id}/editar
 	Route::post('/enfermedad/{id}', 'DiseaseController@update');
 
