@@ -39,7 +39,7 @@ class SpeciesController extends Controller
         //ajustamos y guardamos la imagen en la ruta especificada
         Image::make($request->file('photo'))
                ->resize(250,250)
-               ->save('images/species/'. $file_name);
+               ->save(public_path() . '/images/species/'. $file_name);
 
         return back()->with('notification','Usuario registrado exitosamente');
     }
@@ -74,13 +74,12 @@ class SpeciesController extends Controller
             //ajustamos y guardamos la imagen en la ruta especificada
             Image::make($request->file('photo'))
                    ->resize(250,250)
-                   ->save('images/species/'. $file_name);
+                   ->save(public_path() . 'images/species/'. $file_name);
         }
         
         $especies->save();
-         
-        // return view('species.index')->with(compact('species'));
-        return $this->index();
+
+        return redirect('/especies');
     }
 
     public function delete($id)
