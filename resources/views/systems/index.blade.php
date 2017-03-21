@@ -77,8 +77,8 @@
 		<!-- Modal Structure -->
   <div id="modal_delete" class="modal">
     <div class="modal-content">
-      <h4>Esta seguro que desea eliminar el sistema</h4>
-      <p>Si elimina este sistema se eliminaran tambien las relaciones con sus enfermedades</p>
+      <h4>¿Está seguro que desea eliminar este sistema?</h4>
+      <p>Si elimina este sistema se eliminarán tambien las relaciones con sus enfermedades.</p>
     </div>
     <div class="modal-footer">
       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">No eliminar</a>
