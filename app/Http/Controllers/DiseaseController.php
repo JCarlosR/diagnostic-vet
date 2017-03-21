@@ -93,7 +93,7 @@ class DiseaseController extends Controller
             // Y los síntomas asociados
             $symptoms = explode(",", $request->input('symptoms'));
             foreach ($symptoms as $symptom_name) {
-                $symptom_name = trim($symptom_name);
+                $symptom_name = preg_replace('/(\s)+/', ' ', trim($symptom_name));
                 if ($symptom_name == '')
                     continue;
 
@@ -243,6 +243,10 @@ class DiseaseController extends Controller
             $symptoms = explode(",", $request->input('symptoms'));
             
             foreach ($symptoms as $symptom_name) {
+                $symptom_name = preg_replace('/(\s)+/', ' ', trim($symptom_name));                 
+                if ($symptom_name == '')
+                    continue;
+
                 $diseaseSymptom = new DiseaseSymptom();
                 $diseaseSymptom->disease_id = $id;
                 $symptom = Symptom::firstOrCreate([
