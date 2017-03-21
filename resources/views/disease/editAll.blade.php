@@ -19,12 +19,12 @@
 	        </div>
 
 	        <div class="input-field col s6">
-	          <textarea name="review" class="materialize-textarea" value="{{$diseases->review}}" required>{{$diseases->review}}</textarea>
+	          <textarea name="review" class="materialize-textarea" required>{{$diseases->review}}</textarea>
 	          <label for="textarea1">Reseña</label>
 	        </div>
 
 	        <div class="input-field col s6">
-	          <textarea name="exams"  class="materialize-textarea" value="{{$diseases->name}}" required>{{$diseases->exams}}</textarea>
+	          <textarea name="exams"  class="materialize-textarea" required>{{$diseases->exams}}</textarea>
 	          <label for="textarea1">Examenes Complementarios</label>
 	        </div>
 
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="col s12">
-				<input type="hidden" name="symptoms" value="" id ="symptoms">
+				<input type="hidden" name="symptoms" value="@foreach($chips as $chip) {{ $chip->name }}, @endforeac" id ="symptoms">
 				<div class="chips chips-autocomplete">
 				</div>
 			</div>

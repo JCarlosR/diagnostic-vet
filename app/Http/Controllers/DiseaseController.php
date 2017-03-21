@@ -160,11 +160,8 @@ class DiseaseController extends Controller
     }
     public function editAll($species_id, $id_disease)
     {
-        // $system = System::findOrFail($id);
-       
-        $species_system = Species::where('id',$species_id)->first();
 
-        // $diseases = Disease::where('species_id',$system->species_id)->get();
+        $species_system = Species::find($species_id);
 
         // obteniendo enfermedad
         $diseases = Disease::find($id_disease);
@@ -172,8 +169,10 @@ class DiseaseController extends Controller
         // Sistemas afectados
         $diseaseSystems = DiseaseSystem::where('disease_id', $id_disease)->pluck('system_id');
         $diseaseSystems = $diseaseSystems->toArray();
+
         // Sistemas asociados con la especie
         $systems = System::where('species_id', $species_id)->get();
+
         // Marcamos los sistemas que ya están seleccionados
         foreach ($systems as $system) {
             if (in_array($system->id, $diseaseSystems))
@@ -181,20 +180,17 @@ class DiseaseController extends Controller
             else
                 $system->checked = false;
         }
-        
 
         // Todos los sintomas
         $symptoms = Symptom::all();
 
         // Síntomas escogidos
         $diseaseSymptoms = DiseaseSymptom::where('disease_id', $id_disease)->pluck('symptom_id');
-        // dd($diseaseSymptoms);
         if (sizeof($diseaseSymptoms) > 0)
             $chips = Symptom::whereIn('id', $diseaseSymptoms)->get();
         else $chips = [];
-        // dd($chips);
 
-        //variable de sesion
+        // Variable de session
         session()->put('redirect_update_disease', '/enfermedadesAll/'.$species_id);
 
         return view('disease.editAll')->with(compact(
@@ -208,8 +204,7 @@ class DiseaseController extends Controller
 
     public function update($id, Request $request)
     {
-        
-        // dd($id);
+
         // Guardamos en la bd una nueva enfermedad
         $disease = Disease::find($id);
         $disease->name = $request->input('name');
