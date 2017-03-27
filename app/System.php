@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class System extends Model
 {
 	use SoftDeletes;
-    public function getPhotoRouteAttribute()
+
+    public function diseases()
+    {
+        return $this->belongsToMany('App\Disease');
+    }
+
+	public function getPhotoRouteAttribute()
     {        
         return '/images/systems/'.$this->id.'.'.$this->photo;
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Disease;
+use App\System;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,7 @@ class DiseaseController extends Controller
     }
 
     public function bySystem($id) {
-        $diseases = Disease::all();
+        $diseases = System::find($id)->diseases();
         return $diseases;
     }
 

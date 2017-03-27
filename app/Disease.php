@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Disease extends Model
 {
 	use SoftDeletes;
-    protected $fillable = ['name','description'];
+
+	protected $fillable = ['name','description'];
+
+    public function systems()
+    {
+        return $this->belongsToMany('App\System');
+    }
 
     public function getReviewShortAttribute(){
     	return mb_strimwidth($this->review, 0, 70,'...');
