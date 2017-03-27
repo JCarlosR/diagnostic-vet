@@ -4,6 +4,6 @@ use Illuminate\Http\Request;
 
 Route::get('/diseases', 'Api\DiseaseController@all');
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/system/{id}/diseases', 'Api\DiseaseController@bySystem');
+
+Route::get('/species/{id}/diseases', 'Api\DiseaseController@bySpecies');

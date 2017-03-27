@@ -8,8 +8,18 @@ use App\Http\Controllers\Controller;
 
 class DiseaseController extends Controller
 {
-    function all() {
+    public function all() {
         $diseases = Disease::all();
+        return $diseases;
+    }
+
+    public function bySystem($id) {
+        $diseases = Disease::all();
+        return $diseases;
+    }
+
+    public function bySpecies($id) {
+        $diseases = Disease::where('species_id', $id)->get();
         return $diseases;
     }
 }
