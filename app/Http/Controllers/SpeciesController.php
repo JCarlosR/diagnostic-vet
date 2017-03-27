@@ -58,11 +58,9 @@ class SpeciesController extends Controller
     {
         $especies = Species::find($id);
 
-        if(! $request->file('photo')){
-            // dd("no esta instanciado");
+        if (! $request->file('photo')){
             $especies->name = $request->input('name');
-        }else{
-            // dd("si esta instanciado");
+        } else {
             //obenemos la extension del archivo
             $extension = $request->file('photo')->getClientOriginalExtension(); 
             $especies->name = $request->input('name');

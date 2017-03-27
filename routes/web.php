@@ -1,27 +1,14 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index');
-
 Route::group(['middleware' => 'auth'], function () {
 
-	//Especies
+	// Species
 	Route::get('/especies', 'SpeciesController@index');
 	Route::post('/especies', 'SpeciesController@store');
 
@@ -30,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/especie/{id}/eliminar', 'SpeciesController@delete');
 
-	//Sistemas
+	// Systems
 	Route::get('/sistemas/{id}', 'SystemController@index');
 	Route::post('/sistemas/{id}', 'SystemController@store');
 
@@ -39,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/sistema/{id}/eliminar', 'SystemController@delete');
 
-	//Disease
+	// Diseases
 	Route::get('/enfermedadesAll/{id_specie}', 'DiseaseController@indexAll');//aqui todas las enfermedades de la especie
 	Route::get('/enfermedades/{id}', 'DiseaseController@index');//aqui enfermdedades por sistema
 	Route::post('/enfermedades', 'DiseaseController@store');
@@ -51,12 +38,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/enfermedad/{id}/eliminar', 'DiseaseController@delete');
 
-	//Symptom
+	// Symptoms
 	Route::post('/sintomas', 'SymptomController@store');
 	Route::post('/sintomas/editar', 'SymptomController@update');
 
 
-	//DiseaseSymptom
+	// DiseaseSymptom
 	Route::post('/enfermedad-sintoma', 'DiseaseSymptomController@store');
 	Route::post('/enfermedad-sintoma/eliminar', 'DiseaseSymptomController@delete');
 
