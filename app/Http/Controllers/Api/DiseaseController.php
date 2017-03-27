@@ -15,7 +15,7 @@ class DiseaseController extends Controller
     }
 
     public function bySystem($id) {
-        $diseases = System::find($id)->diseases();
+        $diseases = System::find($id)->diseases;
         return $diseases;
     }
 
