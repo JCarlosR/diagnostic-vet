@@ -20,7 +20,7 @@ class DiseaseController extends Controller
     }
 
     public function bySpecies($id) {
-        $diseases = Disease::where('species_id', $id)->get();
+        $diseases = Disease::where('species_id', $id)->orderBy('name', 'asc')->get();
         return $diseases;
     }
 }

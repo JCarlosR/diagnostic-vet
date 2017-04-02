@@ -11,7 +11,7 @@ class System extends Model
 
     public function diseases()
     {
-        return $this->belongsToMany('App\Disease');
+        return $this->belongsToMany('App\Disease')->orderBy('name', 'asc');
     }
 
 	public function getPhotoRouteAttribute()
