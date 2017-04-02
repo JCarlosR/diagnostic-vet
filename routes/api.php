@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+Route::get('/species', 'Api\SpeciesController@all');
 
 Route::get('/diseases', 'Api\DiseaseController@all');
 
