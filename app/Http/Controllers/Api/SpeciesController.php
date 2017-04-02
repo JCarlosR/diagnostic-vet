@@ -10,6 +10,8 @@ class SpeciesController extends Controller
 {
     public function all()
     {
-        return Species::all();
+        return Species::all([
+            'id', 'name', 'photo'
+        ]);
     }
 }
