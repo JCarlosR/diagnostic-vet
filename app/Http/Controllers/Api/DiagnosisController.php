@@ -44,14 +44,12 @@ class DiagnosisController extends Controller
             // pluck returns a collection and we need an array for the array_intersect
             $symptoms = DiseaseSymptom::where('disease_id', $disease->id)->pluck('id')->toArray();
 
-            var_dump($symptoms);
-            dd($selected_symptoms);
-
             $intersect_count = count( array_intersect($selected_symptoms, $symptoms) );
+            var_dump($intersect_count);
             if ($intersect_count > 0)
                 $results->push($disease);
         }
-
+        dd($results);
         return $results;
     }
 }
