@@ -36,7 +36,7 @@ class DiagnosisController extends Controller
     {
         $results = collect();
         foreach ($diseases as $disease) {
-            $symptoms = DiseaseSymptom::where('disease_id', $disease->id)->pluck('id');
+            $symptoms = DiseaseSymptom::where('disease_id', $disease->id)->value('id');
             dd($symptoms);
             $intersect_count = count( array_intersect($selected_symptoms, $symptoms) );
             if ($intersect_count > 0)
