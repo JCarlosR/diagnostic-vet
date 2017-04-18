@@ -16,7 +16,7 @@ class DiagnosisController extends Controller
         $diseases = System::find($id)->diseases;
 
         // match by selected symptoms
-        $selected_symptoms = $request->input('symptoms[]');
+        $selected_symptoms = $request->input('symptoms');
 
         return $this->matchDiseasesWithTheSelectedSymptoms($diseases, $selected_symptoms);
     }
@@ -27,7 +27,7 @@ class DiagnosisController extends Controller
         $diseases = Disease::where('species_id', $id)->orderBy('name', 'asc')->get();
 
         // match by selected symptoms
-        $selected_symptoms = $request->input('symptoms[]');
+        $selected_symptoms = $request->input('symptoms');
 
         return $this->matchDiseasesWithTheSelectedSymptoms($diseases, $selected_symptoms);
     }
@@ -35,12 +35,15 @@ class DiagnosisController extends Controller
     private function matchDiseasesWithTheSelectedSymptoms($diseases, $selected_symptoms)
     {
         $results = collect();
+
+        if (! $diseases || ! $selected_symptoms)
+            return [];
+
         foreach ($diseases as $disease) {
 
             // pluck returns a collection and we need an array for the array_intersect
             $symptoms = DiseaseSymptom::where('disease_id', $disease->id)->pluck('id')->toArray();
-            var_dump($selected_symptoms);
-            dd($symptoms);
+
             $intersect_count = count( array_intersect($selected_symptoms, $symptoms) );
             if ($intersect_count > 0)
                 $results->push($disease);
