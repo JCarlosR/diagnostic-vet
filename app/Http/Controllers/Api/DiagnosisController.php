@@ -36,6 +36,9 @@ class DiagnosisController extends Controller
     {
         $results = collect();
 
+        var_dump($diseases);
+        dd($selected_symptoms);
+
         if (! $diseases || ! $selected_symptoms)
             return [];
 
