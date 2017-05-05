@@ -46,7 +46,8 @@ class DiagnosisController extends Controller
 
             $intersect_count = count( array_intersect($selected_symptoms, $symptoms) );
 
-            if ($intersect_count > 0)
+            // the disease has to contain ALL the selected symptoms (before it was at least ONE)
+            if ($intersect_count == count($selected_symptoms))
                 $results->push($disease);
         }
 
