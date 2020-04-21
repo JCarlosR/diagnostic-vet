@@ -1,7 +1,5 @@
 $(function () {
-
 	$('[data-id=add_symptom]').click(onClickAddSymptom);
-	
 });
 
 function onClickAddSymptom(event) {

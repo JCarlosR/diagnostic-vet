@@ -1,8 +1,4 @@
-
-<!-- <a href="#!" class="breadcrumb">Second</a>
-<a href="#!" class="breadcrumb">Third</a>
- -->
-<!-- <ul id="slide-out" class="side-nav">
+<ul id="slide-out" class="side-nav">
     <li>
       <div class="userView">
         <div class="background">
@@ -18,7 +14,7 @@
     <li><a class="waves-effect" href="/especies">Especies</a></li>
     <li><a class="waves-effect" href="/enfermedades">Enfermedades</a></li>
 </ul>
-    <li><div class="divider"></div></li> -->
+    <li><div class="divider"></div></li>
 
 <!-- <li><a href="#" data-activates="slide-out" class="button-collapse"><i class="medium material-icons">menu</i></a></li> -->
 <!-- <div class="collection">

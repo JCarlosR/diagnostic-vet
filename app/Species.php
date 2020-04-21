@@ -10,6 +10,11 @@ class Species extends Model
 	use SoftDeletes;
 
     protected $fillable = ['name','description'];
+    
+    public function getDiseases()
+    {
+        
+    }
 
     public function getPhotoRouteAttribute()
     {        

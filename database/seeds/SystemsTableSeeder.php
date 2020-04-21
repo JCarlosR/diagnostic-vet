@@ -12,27 +12,28 @@ class SystemsTableSeeder extends Seeder
      */
     public function run()
     {
-        // System::create([
-        // 	'name' => 'Circulatorio',
-        //     'photo' => 'jpg',
-        //     'species_id' => '1',
-        // ]);
+         System::create([
+         	'name' => 'Circulatorio',
+             'photo' => 'jpg',
+             'species_id' => '1',
+         ]);
 
-        // System::create([
-        // 	'name' => 'Digestivo',
-        //     'photo' => 'jpg',
-        //     'species_id' => '1',
-        // ]);
-        // System::create([
-        // 	'name' => 'Oseo',
-        //     'photo' => 'jpg',
-        //     'species_id' => '2',
-        // ]);
+         System::create([
+         	'name' => 'Digestivo',
+             'photo' => 'jpg',
+             'species_id' => '1',
+         ]);
+         
+         System::create([
+         	'name' => 'Oseo',
+             'photo' => 'jpg',
+             'species_id' => '2',
+         ]);
 
-        // System::create([
-        // 	'name' => 'Nervioso',
-        //     'photo' => 'jpg',
-        //     'species_id' => '2',
-        // ]);
+         System::create([
+         	'name' => 'Nervioso',
+             'photo' => 'jpg',
+             'species_id' => '2',
+         ]);
     }
 }

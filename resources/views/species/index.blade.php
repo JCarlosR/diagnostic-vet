@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('contentMenu')
-<a href="#" class="breadcrumb">Especies</a>
-
+	<a href="#" class="breadcrumb">Especies</a>
 @endsection
 
 @section('content')

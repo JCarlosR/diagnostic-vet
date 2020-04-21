@@ -13,68 +13,77 @@ use App\DiseaseSymptom;
 
 class DiseaseController extends Controller
 {
-    public function indexAll($id_species)
-    {          
+    public function indexAll(Species $species)
+    {   
+        // Sistemas de la especie
+        $systems = System::where('species_id', $species->id)->get();
 
-        $species_system = Species::find($id_species);//Especie
+        // Ids de los sistemas
+        $systemIds = $systems->pluck('id')
+            ->toArray();
 
-        $systems_species = System::where('species_id',$id_species)->get();//Sistemas de la especie
-            
-        $systems_species_array = System::where('species_id',$id_species)->pluck('id');;//Id de los sistemas de la especie
-        $systems_species_array = $systems_species_array->toArray();
-
-        $diseases_system_array = DiseaseSystem::whereIn('system_id',$systems_species_array)->pluck('disease_id');//Enfermdades de la especie       
-        $diseases_system_array = $diseases_system_array->toArray();
-        $diseases_system = Disease::whereIn('id',$diseases_system_array)->orderBy('name', 'asc')->get();
-
-        $diseases_assigned = DiseaseSystem::pluck('disease_id');//id de enfermedades com sistemas asignados
-        $diseases_assigned = $diseases_assigned->toArray();
-
-        $diseases_unassigned = Disease::whereNotIn('id',$diseases_assigned)->orderBy('name', 'asc')->get();// Enfermedades sin asociar
+        // Enfermedades de la especie
+        $diseaseIds = DiseaseSystem::whereIn('system_id', $systemIds)
+            ->pluck('disease_id')
+            ->toArray();
         
+        $diseases = Disease::whereIn('id', $diseaseIds)
+            ->orderBy('name', 'asc')->get();
 
-        $symptoms = Symptom::all();//todos los sintomas
+        $unassignedDiseases = $this->getUnassignedDiseases();
+
+        $symptoms = Symptom::all();
         
-        return view('disease.indexAll')->with(compact(
-            'species_system','systems_species','diseases_system', 'symptoms','diseases_unassigned'
+        return view('disease.indexAll', compact(
+            'species','systems', 'diseases', 'symptoms', 'unassignedDiseases'
         ));
     }
-    public function index($id) // system_id
-    {
-        $system = System::findOrFail($id); //arreglo del sistema correspondiente al id
-       
-        $species_system = Species::where('id',$system->species_id)->first();
+    
+    public function index(System $system)
+    {       
+        $species = $system->species;
+
+        // Sistemas de la especie
+        $systems = System::where('species_id', $system->species_id)->get();
+
+        // Enfermedades del sistema
+        //  dd($system->diseases);
+        $diseaseIds = DiseaseSystem::where('system_id', $system->id)
+            ->pluck('disease_id')->toArray();
+
+        $diseases = Disease::whereIn('id', $diseaseIds)
+            ->orderBy('name', 'asc')->get();
+
+        $unassignedDiseases = $this->getUnassignedDiseases();
         
-        $systems_species = System::where('species_id',$system->species_id)->get();
-
-        $diseases_system_array = DiseaseSystem::where('system_id',$id)->pluck('disease_id');//
-        $diseases_system_array = $diseases_system_array->toArray();
-
-        $diseases_system = Disease::whereIn('id',$diseases_system_array)->orderBy('name', 'asc')->get();// enferm.del system
-        // dd($diseases_system);
-
-        $diseases_assigned = DiseaseSystem::pluck('disease_id');//id de enfermedades com sistemas asignados
-        $diseases_assigned = $diseases_assigned->toArray();
-
-        $diseases_unassigned = Disease::whereNotIn('id',$diseases_assigned)->orderBy('name', 'asc')->get();// Enfermedades sin asociar
-        // dd(empty($system));
         $symptoms = Symptom::all();
         
         return view('disease.index')->with(compact(
-            'system','species_system','systems_species','diseases_system', 'symptoms','diseases_unassigned'
-        ));
-    	
+            'system','species', 'systems', 'diseases', 'symptoms', 'unassignedDiseases'
+        ));    	
+    }
+    
+    private function getUnassignedDiseases()
+    {
+        // Ids de enfermedades asignadas a sistemas
+        $assignedIds = DiseaseSystem::pluck('disease_id')
+            ->toArray();
+
+        // Enfermedades sin asociar
+        return Disease::whereNotIn('id', $assignedIds)
+            ->orderBy('name', 'asc')->get();
     }
     
     public function store(Request $request)
     {
-        // Guardamos en la bd una nueva enfermedad
+        // Store a new disease
         $disease = new Disease();
         $disease->name = $request->input('name');
         $disease->review = $request->input('review');
         $disease->exams = $request->input('exams');
         $disease->treatment = $request->input('treatment');
         $disease->species_id = $request->input('species_id');
+        
         $saved = $disease->save();
 
         // Si se guardó la enfermedad
@@ -90,17 +99,19 @@ class DiseaseController extends Controller
                     $diseaseSystem->save();
                 }    
             }
+            
             // Y los síntomas asociados
             $symptoms = explode(",", $request->input('symptoms'));
-            foreach ($symptoms as $symptom_name) {
-                $symptom_name = preg_replace('/(\s)+/', ' ', trim($symptom_name));
-                if ($symptom_name == '')
+            foreach ($symptoms as $symptomName) {
+                $symptomName = preg_replace('/(\s)+/', ' ', trim($symptomName));
+                
+                if ($symptomName == '')
                     continue;
 
                 $diseaseSymptom = new DiseaseSymptom();
                 $diseaseSymptom->disease_id = $disease->id;
                 $symptom = Symptom::firstOrCreate([
-                    'name' => $symptom_name
+                    'name' => $symptomName
                 ]);
                 $diseaseSymptom->symptom_id = $symptom->id;
                 $diseaseSymptom->save();
@@ -117,8 +128,6 @@ class DiseaseController extends Controller
        
         $species_system = Species::where('id',$system->species_id)->first();
 
-        // $diseases = Disease::where('species_id',$system->species_id)->get();
-
         // obteniendo enfermedad
         $diseases = Disease::find($id_disease);
 
@@ -127,7 +136,7 @@ class DiseaseController extends Controller
         $diseaseSystems = $diseaseSystems->toArray();
         // Sistemas asociados con la especie
         $systems = System::where('species_id', $system->species_id)->get();
-        // dd($system);
+        
         // Marcamos los sistemas que ya están seleccionados
         foreach ($systems as $system) {
             if (in_array($system->id, $diseaseSystems))
@@ -158,6 +167,7 @@ class DiseaseController extends Controller
             'symptoms', 'chips'
         ));
     }
+    
     public function editAll($species_id, $id_disease)
     {
 
@@ -201,11 +211,8 @@ class DiseaseController extends Controller
         ));
     }
 
-
     public function update($id, Request $request)
     {
-
-        // Guardamos en la bd una nueva enfermedad
         $disease = Disease::find($id);
         $disease->name = $request->input('name');
         $disease->review = $request->input('review');
@@ -253,10 +260,7 @@ class DiseaseController extends Controller
             // dd("guardo los SINTOMAS asociados");
         }
         
-        // return back();
         return redirect(session('redirect_update_disease'));
-        
-    
     }
 
     public function delete($id)
