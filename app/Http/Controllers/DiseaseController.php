@@ -18,17 +18,10 @@ class DiseaseController extends Controller
         // Sistemas de la especie
         $systems = System::where('species_id', $species->id)->get();
 
-        // Ids de los sistemas
-        $systemIds = $systems->pluck('id')
-            ->toArray();
-
-        // Enfermedades de la especie
-        $diseaseIds = DiseaseSystem::whereIn('system_id', $systemIds)
-            ->pluck('disease_id')
-            ->toArray();
-        
-        $diseases = Disease::whereIn('id', $diseaseIds)
-            ->orderBy('name', 'asc')->get();
+        // Enfermedades de la especie        
+        $diseases = $this->getDiseasesBySystems(
+            $systems->pluck('id')
+        );
 
         $unassignedDiseases = $this->getUnassignedDiseases();
 
@@ -47,12 +40,7 @@ class DiseaseController extends Controller
         $systems = System::where('species_id', $system->species_id)->get();
 
         // Enfermedades del sistema
-        //  dd($system->diseases);
-        $diseaseIds = DiseaseSystem::where('system_id', $system->id)
-            ->pluck('disease_id')->toArray();
-
-        $diseases = Disease::whereIn('id', $diseaseIds)
-            ->orderBy('name', 'asc')->get();
+        $diseases = $this->getDiseasesBySystem($system->id);
 
         $unassignedDiseases = $this->getUnassignedDiseases();
         
@@ -61,6 +49,24 @@ class DiseaseController extends Controller
         return view('disease.index')->with(compact(
             'system','species', 'systems', 'diseases', 'symptoms', 'unassignedDiseases'
         ));    	
+    }
+    
+    private function getDiseasesBySystem($systemId)
+    {
+        $diseaseIds = DiseaseSystem::where('system_id', $systemId)
+            ->pluck('disease_id');
+
+        return Disease::whereIn('id', $diseaseIds)
+            ->orderBy('name', 'asc')->get();
+    }
+
+    private function getDiseasesBySystems($systemIds)
+    {
+        $diseaseIds = DiseaseSystem::whereIn('system_id', $systemIds)
+            ->pluck('disease_id')->toArray();
+
+        return Disease::whereIn('id', $diseaseIds)
+            ->orderBy('name', 'asc')->get();
     }
     
     private function getUnassignedDiseases()
@@ -120,8 +126,7 @@ class DiseaseController extends Controller
         
         return back();
     }
-
-
+    
     public function edit(System $system, Disease $disease)
     {       
         $species = $system->species;
@@ -162,8 +167,8 @@ class DiseaseController extends Controller
 
         $symptoms = Symptom::all();
 
-        return view('disease.editAll')->with(compact(
-            'system','species','disease', 'systems', 
+        return view('disease.edit')->with(compact(
+            'species','disease', 'systems', 
 
             // All symptoms and the assigned ones
             'symptoms', 'chips'
