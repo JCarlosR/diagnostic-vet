@@ -10,12 +10,6 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/css/disease/edit.css">
-    <style type="text/css">
-        .circle responsive-img {
-            background-repeat: no-repeat;
-        }
-    </style>
 </head>
 <body>
 <div>

@@ -22,11 +22,7 @@
 		Especie: {{ $species->name }}
 	</h3>
 
-	<div class="fixed-action-btn">
-		<a data-add="x" href="#modal_create" title="AGREGAR ENFERMEDAD" class="btn-floating btn-large teal">
-			<i class="large material-icons">add</i>
-		</a>
-	</div>
+	@include('disease.floatingButton')
 	
 	<table class="table table-bordered">
 		<thead>
@@ -64,7 +60,7 @@
 		const $chips = $('#symptoms_chips');
 		
 		$chips.material_chip({
-			secondaryPlaceholder: 'Ingresa un síntoma y presiona ENTER',
+			secondaryPlaceholder: 'Ingresa 1 síntoma y ENTER',
 			placeholder: '+Síntoma',
 			autocompleteData: {
 				@foreach ($symptoms as $symptom)
@@ -73,5 +69,6 @@
 			}
 		});
 	</script>
-<script src="{{ asset('js/disease/index.js') }}"></script>
+	<script src="{{ asset('js/disease/index.js') }}"></script>
+	<script src="{{ asset('js/disease/chips.js') }}"></script>
 @endsection

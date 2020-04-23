@@ -122,93 +122,73 @@ class DiseaseController extends Controller
     }
 
 
-    public function edit($id, $id_disease)
-    {
-        $system = System::findOrFail($id);
-       
-        $species_system = Species::where('id',$system->species_id)->first();
+    public function edit(System $system, Disease $disease)
+    {       
+        $species = $system->species;
 
-        // obteniendo enfermedad
-        $diseases = Disease::find($id_disease);
-
-        // Sistemas afectados
-        $diseaseSystems = DiseaseSystem::where('disease_id', $id_disease)->pluck('system_id');
-        $diseaseSystems = $diseaseSystems->toArray();
-        // Sistemas asociados con la especie
         $systems = System::where('species_id', $system->species_id)->get();
-        
-        // Marcamos los sistemas que ya están seleccionados
-        foreach ($systems as $system) {
-            if (in_array($system->id, $diseaseSystems))
-                $system->checked = true;
-            else
-                $system->checked = false;
-        }
-        
 
-        // Todos los sintomas
+        // Mark as checked those already associated systems
+        $systems = $this->checkAssociatedSystems($systems, $disease->id);
+
+        // Assigned symptoms
+        $chips = $this->getAssignedSymptoms($disease->id);
+
+        // Redirect after update
+        session()->put('redirect_update_disease', '/enfermedades/'.$system->id);
+
         $symptoms = Symptom::all();
 
-        // Síntomas escogidos
-        $diseaseSymptoms = DiseaseSymptom::where('disease_id', $id_disease)->pluck('symptom_id');
-        // dd($diseaseSymptoms);
-        if (sizeof($diseaseSymptoms) > 0)
-            $chips = Symptom::whereIn('id', $diseaseSymptoms)->get();
-        else $chips = [];
-        // dd($chips);
-
-        // Variable de sesión
-        session()->put('redirect_update_disease', '/enfermedades/'.$id);
-
         return view('disease.edit')->with(compact(
-            'system','species_system','diseases', 'systems', 
+            'system','species','disease', 'systems',
 
-            // Sintomas: todos y los escogidos
+            // All symptoms and the assigned ones
             'symptoms', 'chips'
         ));
     }
     
-    public function editAll($species_id, $id_disease)
+    public function editAll(Species $species, Disease $disease)
     {
+        $systems = $species->systems;
 
-        $species_system = Species::find($species_id);
+        // Mark as checked those already associated systems
+        $systems = $this->checkAssociatedSystems($systems, $disease->id);
+        
+        // Assigned symptoms
+        $chips = $this->getAssignedSymptoms($disease->id);
 
-        // obteniendo enfermedad
-        $diseases = Disease::find($id_disease);
+        // Redirect after update
+        session()->put('redirect_update_disease', '/enfermedadesAll/'.$species->id);
 
-        // Sistemas afectados
-        $diseaseSystems = DiseaseSystem::where('disease_id', $id_disease)->pluck('system_id');
-        $diseaseSystems = $diseaseSystems->toArray();
-
-        // Sistemas asociados con la especie
-        $systems = System::where('species_id', $species_id)->get();
-
-        // Marcamos los sistemas que ya están seleccionados
-        foreach ($systems as $system) {
-            if (in_array($system->id, $diseaseSystems))
-                $system->checked = true;
-            else
-                $system->checked = false;
-        }
-
-        // Todos los sintomas
         $symptoms = Symptom::all();
 
-        // Síntomas escogidos
-        $diseaseSymptoms = DiseaseSymptom::where('disease_id', $id_disease)->pluck('symptom_id');
-        if (sizeof($diseaseSymptoms) > 0)
-            $chips = Symptom::whereIn('id', $diseaseSymptoms)->get();
-        else $chips = [];
-
-        // Variable de session
-        session()->put('redirect_update_disease', '/enfermedadesAll/'.$species_id);
-
         return view('disease.editAll')->with(compact(
-            'system','species_system','diseases', 'systems', 
+            'system','species','disease', 'systems', 
 
-            // Sintomas: todos y los escogidos
+            // All symptoms and the assigned ones
             'symptoms', 'chips'
         ));
+    }
+    
+    private function getAssignedSymptoms($diseaseId)
+    {
+        $symptomIds = DiseaseSymptom::where('disease_id', $diseaseId)
+            ->pluck('symptom_id');
+        
+        return Symptom::whereIn('id', $symptomIds)->get();
+    }
+    
+    private function checkAssociatedSystems($systems, $diseaseId)
+    {
+        // Affected systems
+        $diseaseSystems = DiseaseSystem::where('disease_id', $diseaseId)
+            ->pluck('system_id')->toArray();
+        
+        foreach ($systems as $system) {
+            $system->checked = in_array($system->id, $diseaseSystems);
+        }
+        
+        return $systems;
     }
 
     public function update($id, Request $request)
@@ -221,43 +201,39 @@ class DiseaseController extends Controller
         
         $saved = $disease->save();
 
-        //eliminamos los sistemas asociados
-        DiseaseSystem::where('disease_id',$id)->delete();
-        DiseaseSymptom::where('disease_id',$id)->delete();
+        // Delete existing relationships to start over again
+        DiseaseSystem::where('disease_id', $id)->delete();
+        DiseaseSymptom::where('disease_id', $id)->delete();
         
-        // Si se guardó la enfermedad
         if ($saved) {
 
-            // Registramos los sistemas asociados
-            $system_ids = $request->input('systems');
+            // Associate systems
+            $systemIds = (array) $request->input('systems');
 
-            if ($system_ids > 0) {
-                foreach ($system_ids as $system_id) {   
+            foreach ($systemIds as $system_id) {   
                 $diseaseSystem = new DiseaseSystem();
                 $diseaseSystem->disease_id = $id;
                 $diseaseSystem->system_id = $system_id;
                 $diseaseSystem->save();
-                }   
-            }
+            }   
 
-
-            // Y los síntomas asociados
+            // Associate symptoms
             $symptoms = explode(",", $request->input('symptoms'));
             
-            foreach ($symptoms as $symptom_name) {
-                $symptom_name = preg_replace('/(\s)+/', ' ', trim($symptom_name));                 
-                if ($symptom_name == '')
+            foreach ($symptoms as $symptomName) {
+                $symptomName = preg_replace('/(\s)+/', ' ', trim($symptomName));
+                
+                if ($symptomName === '')
                     continue;
 
                 $diseaseSymptom = new DiseaseSymptom();
                 $diseaseSymptom->disease_id = $id;
                 $symptom = Symptom::firstOrCreate([
-                    'name' => $symptom_name
+                    'name' => $symptomName
                 ]);
                 $diseaseSymptom->symptom_id = $symptom->id;
                 $diseaseSymptom->save();
             }
-            // dd("guardo los SINTOMAS asociados");
         }
         
         return redirect(session('redirect_update_disease'));

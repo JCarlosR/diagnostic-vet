@@ -3,30 +3,34 @@
         {{ csrf_field() }}
 
         <div class="modal-content">
-            <h5 class="center-align">REGISTRAR ENFERMEDAD - Especie: {{$species->name}}</h5><br>
+            <h5 class="center-align">REGISTRAR ENFERMEDAD - Especie: {{$species->name}}</h5>
 
             <input type="hidden" name="species_id" value="{{$species->id}}">
 
-            <div class="input-field col s6">
-                <input id="name" name="name" placeholder="Ingrese aqui el nombre " type="text" class="validate" required>
-                <label for="name">Nombre</label>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="name" name="name" placeholder="Ingrese aqui el nombre " type="text" class="validate" required>
+                    <label for="name">Nombre</label>
+                </div>
+
+                <div class="input-field col s6">
+                    <textarea id="review" name="review" class="materialize-textarea" required></textarea>
+                    <label for="review">Reseña</label>
+                </div>    
             </div>
+            
+            <div class="row">
+                <div class="input-field col s6">
+                    <textarea id="exams" name="exams"  class="materialize-textarea" required></textarea>
+                    <label for="exams">Exámenes Complementarios</label>
+                </div>
 
-            <div class="input-field col s6">
-                <textarea id="review" name="review" class="materialize-textarea" required></textarea>
-                <label for="review">Reseña</label>
+                <div class="input-field col s6">
+                    <textarea id="treatment" name="treatment"  class="materialize-textarea" required></textarea>
+                    <label for="treatment">Tratamiento</label>
+                </div>    
             </div>
-
-            <div class="input-field col s6">
-                <textarea id="exams" name="exams"  class="materialize-textarea" required></textarea>
-                <label for="exams">Exámenes Complementarios</label>
-            </div>
-
-            <div class="input-field col s6">
-                <textarea id="treatment" name="treatment"  class="materialize-textarea" required></textarea>
-                <label for="treatment">Tratamiento</label>
-            </div><br>
-
+            
             <div class="row">
                 <div class="col s2">
                     <h6>Sistemas afectados</h6>
